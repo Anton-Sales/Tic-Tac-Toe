@@ -26,7 +26,7 @@ export default function App () {
         <Square index={5} player='o' />
         <Square index={6} player='x' />
         <Square index={7} player='o' />
-        <Square index={7} player='x' />
+        <Square index={8} player='x' />
       </Board>
     </StyledApp>
   )
