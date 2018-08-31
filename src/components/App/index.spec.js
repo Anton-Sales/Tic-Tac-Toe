@@ -8,7 +8,7 @@ import App from '.' // import App component
 describe('components:App', () => {
   it('renders the App with a game board and nine squares', () => {
     // "'it' is alias from 'test'"
-    expect(toJson(shallow(<App />))).toMatchSnapshot() // "call shallow(<App />), passing app component and render <App /> 'ONE LEVEL DEEP'"
+    expect(toJson(shallow(<App />).dive())).toMatchSnapshot() // "call shallow(<App />), passing app component and render <App /> 'ONE LEVEL DEEP'"
   }) // pass it 'toJson' function imported from enzyme-to-json to make it prettier for us
 }) // then call expects "Matcher" method 'toMatchSnapshot
 // this creates a snapshot if it doesnt exist and puts it in a '__snapshots__' folder
