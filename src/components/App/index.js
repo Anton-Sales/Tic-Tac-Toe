@@ -2,11 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { times } from 'ramda'
 import { isUndefined } from 'ramda-adjunct'
+import { connect } from 'react-redux'
 
 import { Board, Square } from '..'
+import { getMoves, squareClicked } from '../../state'
 import { getPlayer } from '../../utilities'
 
-function makeSquares (moves) {
+function makeSquares (markSquare, moves = []) {
   return times(square => {
     const player = getPlayer(square, moves)
 
@@ -14,7 +16,7 @@ function makeSquares (moves) {
       <Square
         key={square}
         index={square}
-        handleClick={() => console.log(`Square ${square}`)}
+        handleClick={() => markSquare(square)}
       />
     ) : (
       <Square key={square} index={square} player={player} />
@@ -31,12 +33,26 @@ const StyledApp = styled.div`
   padding: 0;
   width: 100vw;
 `
-StyledApp.displayName = 'StyledApp'
+StyledApp.defaultName = 'StyledApp'
 
-export default function App ({ moves = [] }) {
+export function App ({ markSquare, moves }) {
   return (
     <StyledApp>
-      <Board>{makeSquares(moves)}</Board>
+      <Board>{makeSquares(markSquare, moves)}</Board>
     </StyledApp>
   )
 }
+
+function mapStateToProps (state) {
+  return {
+    moves: getMoves(state)
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    markSquare: square => dispatch(squareClicked(square))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
